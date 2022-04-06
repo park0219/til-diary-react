@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DiaryDispatchContext } from "../App";
 import EmotionItem from "./EmotionItem";
@@ -50,7 +50,7 @@ const getStringDate = (date) => {
     return `${year}-${month}-${day}`;
 };
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ isEdit, originData }) => {
     const navigate = useNavigate();
     const contentRef = useRef();
 
@@ -58,7 +58,7 @@ const DiaryEditor = () => {
     const [emotion, setEmotion] = useState(3);
     const [content, setContent] = useState("");
 
-    const { onCreate } = useContext(DiaryDispatchContext);
+    const { onCreate, onEdit } = useContext(DiaryDispatchContext);
 
     const handleClickEmote = (emotion) => {
         setEmotion(emotion);
@@ -70,13 +70,27 @@ const DiaryEditor = () => {
             return;
         }
 
-        onCreate(date, content, emotion);
+        if (window.confirm(isEdit ? "일기를 수정하시겠습니까?" : "새로운 일기를 작성하시겠습니까?")) {
+            if (!isEdit) {
+                onCreate(date, content, emotion);
+            } else {
+                onEdit(originData.id, date, content, emotion);
+            }
+        }
         navigate("/", { replace: true });
     };
 
+    useEffect(() => {
+        if (isEdit) {
+            setDate(getStringDate(new Date(parseInt(originData.date))));
+            setEmotion(originData.emotion);
+            setContent(originData.content);
+        }
+    }, [isEdit, originData]);
+
     return (
         <div className="DiaryEditor">
-            <MyHeader headText={"새 일기쓰기"} leftChild={<MyButton text={"< 뒤로가기"} onClick={() => navigate(-1)} />} />
+            <MyHeader headText={isEdit ? "일기 수정하기" : "새 일기쓰기"} leftChild={<MyButton text={"< 뒤로가기"} onClick={() => navigate(-1)} />} />
             <div>
                 <section>
                     <h4>오늘은 언제인가요?</h4>
