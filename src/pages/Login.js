@@ -7,24 +7,23 @@ import MyHeader from "../components/MyHeader";
 
 const Login = () => {
     const navigate = useNavigate();
-    const [id, setId] = useState("");
-    const [pw, setPw] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     const { onTokenCreate } = useContext(TokenDispatchContext);
 
+    const inputValid = username.length > 3 && password.length > 3;
+    const isActive = inputValid === true;
+
     const loginSubmit = async (e) => {
         e.preventDefault();
-        if (id.length < 4) {
-            alert("아이디는 4글자 이상 입력해주세요.");
-            return;
-        }
-        if (pw.length < 4) {
-            alert("비밀번호는 4글자 이상 입력해주세요.");
+        if (!inputValid) {
+            alert("입력된 값을 확인해주세요.");
             return;
         }
 
         try {
-            const res = await axios.post("http://localhost:8080/api/auth/authenticate", { username: id, password: pw });
+            const res = await axios.post("http://localhost:8080/api/auth/authenticate", { username: username, password: password });
             //로그인 처리
             if (res.data.token) {
                 onTokenCreate(res.data.token);
@@ -41,11 +40,11 @@ const Login = () => {
             <div className="Login">
                 <form name="login" method="post" onSubmit={loginSubmit}>
                     <section>
-                        <input type="text" name="id" size="43" maxLength={12} placeholder="아이디" onChange={(e) => setId(e.target.value)} />
-                        <input type="password" name="pw" size="43" maxLength={20} placeholder="비밀번호" onChange={(e) => setPw(e.target.value)} />
+                        <input type="text" name="username" size="43" maxLength={12} placeholder="아이디" onChange={(e) => setUsername(e.target.value)} />
+                        <input type="password" name="password" size="43" maxLength={20} placeholder="비밀번호" onChange={(e) => setPassword(e.target.value)} />
                     </section>
                     <section>
-                        <MyButton text={"로그인"} onClick={loginSubmit} />
+                        <MyButton text={"로그인"} type={isActive ? "positive" : "default"} onClick={loginSubmit} />
                         <MyButton text={"회원가입"} onClick={() => navigate(`/join`)} />
                     </section>
                 </form>
