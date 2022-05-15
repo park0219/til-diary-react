@@ -360,3 +360,61 @@ header button {
     font-weight: 400;
     line-height: 2.5;
 }
+
+/* login */
+.Login {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.Login section {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.Login input {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+}
+
+.Login .MyButton {
+    margin-bottom: 10px;
+    width: 80%;
+}
+
+/* Join */
+
+.Join section {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.Join input {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 10px;
+}
+
+.Join .MyButton {
+    margin-bottom: 10px;
+    width: 80%;
+}
+
+.Join .control_box {
+    display: flex;
+    justify-content: space-between;
+}
