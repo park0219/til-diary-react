@@ -418,3 +418,20 @@ header button {
     display: flex;
     justify-content: space-between;
 }
+
+/* Menu */
+header > ul {
+    display: flex;
+    width: 100%;
+}
+
+header > ul li {
+    width: 25%;
+    justify-content: start;
+    list-style-type: none;
+    font-size: 25px;
+}
+
+header > ul li.on {
+    text-decoration: underline;
+}

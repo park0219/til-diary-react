@@ -8,6 +8,7 @@ import Diary from "./pages/Diary";
 import Login from "./pages/Login";
 import Join from "./pages/Join";
 import { getCookie, removeCookie, setCookie } from "./util/cookie";
+import MyMenu from "./components/MyMenu";
 
 const reducer = (state, action) => {
     let newState = [];
@@ -133,13 +134,17 @@ function App() {
                     <DiaryDispatchContext.Provider value={{ onCreate, onEdit, onRemove }}>
                         <BrowserRouter>
                             <div className="App">
+                                <MyMenu />
                                 <Routes>
                                     <Route path="/" element={<Home />} />
+                                    <Route path="/til-status" element={<Home />} />
+                                    <Route path="/list" element={<Home />} />
                                     <Route path="/new" element={<New />} />
                                     <Route path="/edit/:id" element={<Edit />} />
                                     <Route path="/diary/:id" element={<Diary />} />
                                     <Route path="/login" element={<Login />} />
-                                    <Route path="/Join" element={<Join />} />
+                                    <Route path="/join" element={<Join />} />
+                                    <Route path="/info" element={<Join />} />
                                 </Routes>
                             </div>
                         </BrowserRouter>
