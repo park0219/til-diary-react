@@ -64,7 +64,7 @@ function App() {
                             <Route path="/til-status" element={<List />} />
                             <Route path="/list" element={<List />} />
                             <Route path="/new" element={<New />} />
-                            <Route path="/edit/:id" element={<Edit />} />
+                            <Route path="/edit/:boardId" element={<Edit />} />
                             <Route path="/diary/:boardId" element={<Diary />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/join" element={<Join />} />

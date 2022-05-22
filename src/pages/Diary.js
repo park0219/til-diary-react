@@ -38,7 +38,7 @@ const Diary = () => {
                 <MyHeader
                     headText={`${data.createdAt.split("T")[0]} - ${data.nickname} 기록`}
                     leftChild={<MyButton text={"< 뒤로가기"} onClick={() => navigate(-1)} />}
-                    rightChild={<MyButton text={"수정하기"} onClick={() => navigate(`/edit/${data.id}`)} />}
+                    rightChild={<MyButton text={"수정하기"} onClick={() => navigate(`/edit/${data.boardId}`)} />}
                 />
                 <article>
                     <section>

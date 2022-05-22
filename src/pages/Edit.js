@@ -1,33 +1,37 @@
-import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { DiaryStateContext } from "../App";
 import DiaryEditor from "../components/DiaryEditor";
 
 const Edit = () => {
     const navigate = useNavigate();
 
     const [originData, SetOriginData] = useState();
-    const { id } = useParams();
-    //const diaryList = useContext(DiaryStateContext);
-    const diaryList = [];
+    const { boardId } = useParams();
 
     useEffect(() => {
         const titleElement = document.getElementsByTagName("title")[0];
-        titleElement.innerHTML = `TIL 일기장 - ${id}번 수정`;
+        titleElement.innerHTML = `TIL 일기장 - ${boardId}번 수정`;
     }, []);
 
     useEffect(() => {
-        if (diaryList.length >= 1) {
-            const targetDiary = diaryList.find((item) => parseInt(item.id) === parseInt(id));
-
-            if (targetDiary) {
-                SetOriginData(targetDiary);
-            } else {
-                alert("없는 일기 입니다.");
-                navigate("/", { replace: true });
+        //일기 정보 불러오기
+        const getTILInfo = async () => {
+            try {
+                let res = await axios.get(`http://localhost:8080/api/board/${boardId}`);
+                let targetDiary = res.data;
+                if (targetDiary) {
+                    SetOriginData({ boardId: boardId, ...targetDiary });
+                } else {
+                    alert("없는 일기 입니다.");
+                    navigate("/", { replace: true });
+                }
+            } catch (error) {
+                alert("일기 정보를 불러오는 과정에서 오류가 발생했습니다.");
             }
-        }
-    }, [id, diaryList]);
+        };
+        getTILInfo();
+    }, [boardId]);
 
     return <div>{originData && <DiaryEditor isEdit={true} originData={originData} />}</div>;
 };

@@ -24,14 +24,27 @@ const DiaryEditor = ({ isEdit, originData }) => {
             const res = await axios.post("http://localhost:8080/api/board", { title: title, content: content, emotion: emotion }, { headers: { Authorization: `Bearer ${token}` } });
             if (res.status === 200) {
                 alert("등록되었습니다.");
-                navigate("/", { replace: true });
+                navigate("/list", { replace: true });
+                return;
             }
             throw new Error();
         } catch (error) {
             alert("저장하는 과정에서 오류가 발생했습니다.");
         }
     };
-    const onEdit = () => {};
+    const onEdit = async (boardId, title, content, emotion) => {
+        try {
+            const res = await axios.put(`http://localhost:8080/api/board/${boardId}`, { title: title, content: content, emotion: emotion }, { headers: { Authorization: `Bearer ${token}` } });
+            if (res.status === 200) {
+                alert("수정되었습니다.");
+                navigate("/list", { replace: true });
+                return;
+            }
+            throw new Error();
+        } catch (error) {
+            alert("저장하는 과정에서 오류가 발생했습니다.");
+        }
+    };
     const onRemove = () => {};
 
     const handleClickEmote = useCallback((emotion) => {
@@ -48,7 +61,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
             if (!isEdit) {
                 onCreate(title, content, emotion);
             } else {
-                onEdit(originData.id, title, content, emotion);
+                onEdit(originData.boardId, title, content, emotion);
             }
         }
     };
@@ -63,7 +76,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
     useEffect(() => {
         if (isEdit) {
             setTitle(originData.title);
-            setEmotion(originData.emotion);
+            setEmotion(Number(originData.emotion));
             setContent(originData.content);
         }
     }, [isEdit, originData]);
