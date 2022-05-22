@@ -1,25 +1,36 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { DiaryDispatchContext } from "../App";
 import EmotionItem from "./EmotionItem";
 
 import MyButton from "./MyButton";
 import MyHeader from "./MyHeader";
 
-import { getStringDate } from "../util/date";
 import { emotionList } from "../util/emotion";
+import axios from "axios";
+import { TokenStateContext } from "../App";
 
 const DiaryEditor = ({ isEdit, originData }) => {
     const navigate = useNavigate();
     const contentRef = useRef();
 
-    const [date, setDate] = useState(getStringDate(new Date()));
+    const [title, setTitle] = useState("");
     const [emotion, setEmotion] = useState(3);
     const [content, setContent] = useState("");
 
-    //const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
+    const token = useContext(TokenStateContext);
 
-    const onCreate = () => {};
+    const onCreate = async (title, content, emotion) => {
+        try {
+            const res = await axios.post("http://localhost:8080/api/board", { title: title, content: content, emotion: emotion }, { headers: { Authorization: `Bearer ${token}` } });
+            if (res.status === 200) {
+                alert("등록되었습니다.");
+                navigate("/", { replace: true });
+            }
+            throw new Error();
+        } catch (error) {
+            alert("저장하는 과정에서 오류가 발생했습니다.");
+        }
+    };
     const onEdit = () => {};
     const onRemove = () => {};
 
@@ -35,12 +46,11 @@ const DiaryEditor = ({ isEdit, originData }) => {
 
         if (window.confirm(isEdit ? "일기를 수정하시겠습니까?" : "새로운 일기를 작성하시겠습니까?")) {
             if (!isEdit) {
-                onCreate(date, content, emotion);
+                onCreate(title, content, emotion);
             } else {
-                onEdit(originData.id, date, content, emotion);
+                onEdit(originData.id, title, content, emotion);
             }
         }
-        navigate("/", { replace: true });
     };
 
     const handleRemove = () => {
@@ -52,7 +62,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
 
     useEffect(() => {
         if (isEdit) {
-            setDate(getStringDate(new Date(parseInt(originData.date))));
+            setTitle(originData.title);
             setEmotion(originData.emotion);
             setContent(originData.content);
         }
@@ -67,13 +77,13 @@ const DiaryEditor = ({ isEdit, originData }) => {
             />
             <div>
                 <section>
-                    <h4>오늘은 언제인가요?</h4>
+                    <h4>제목</h4>
                     <div className="input_box">
-                        <input type="date" className="input_date" value={date} onChange={(e) => setDate(e.target.value)} />
+                        <input type="text" className="input_text" value={title} onChange={(e) => setTitle(e.target.value)} />
                     </div>
                 </section>
                 <section>
-                    <h4>오늘의 감정</h4>
+                    <h4>TIL 평가</h4>
                     <div className="input_box emotion_list_wrapper">
                         {emotionList.map((item) => (
                             <EmotionItem key={item.emotion_id} {...item} onClick={handleClickEmote} isSelected={item.emotion_id === emotion} />
@@ -81,9 +91,9 @@ const DiaryEditor = ({ isEdit, originData }) => {
                     </div>
                 </section>
                 <section>
-                    <h4>오늘의 일기</h4>
+                    <h4>TIL 정리</h4>
                     <div className="input_box text_wrapper">
-                        <textarea ref={contentRef} placeholder="오늘은 어땠나요" value={content} onChange={(e) => setContent(e.target.value)} />
+                        <textarea ref={contentRef} placeholder="오늘 배운 내용을 입력해주세요" value={content} onChange={(e) => setContent(e.target.value)} />
                     </div>
                 </section>
                 <section>

@@ -228,17 +228,17 @@ header button {
     font-weight: bold;
 }
 
-.DiaryEditor .input_date {
+.DiaryEditor .input_text {
     border: none;
     border-radius: 5px;
     background-color: #ececec;
+    width: 90%;
 
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
 
-    cursor: pointer;
     font-family: "Nanum Pen Script";
     font-size: 20px;
 }
