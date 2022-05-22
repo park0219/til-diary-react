@@ -18,7 +18,6 @@ const List = () => {
     const getDiaryList = async (firstDay, lastDay) => {
         //diaryList 정보 불러오기
         try {
-            console.log(firstDay, lastDay);
             const res = await axios.get("http://localhost:8080/api/board", { params: { startDate: firstDay, endDate: lastDay } });
             setData(res.data);
         } catch (error) {

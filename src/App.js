@@ -65,7 +65,7 @@ function App() {
                             <Route path="/list" element={<List />} />
                             <Route path="/new" element={<New />} />
                             <Route path="/edit/:id" element={<Edit />} />
-                            <Route path="/diary/:id" element={<Diary />} />
+                            <Route path="/diary/:boardId" element={<Diary />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/join" element={<Join />} />
                             <Route path="/info" element={<Join />} />
