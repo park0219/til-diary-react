@@ -10,7 +10,8 @@ const Diary = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const diaryList = useContext(DiaryStateContext);
+    //const diaryList = useContext(DiaryStateContext);
+    const diaryList = [];
 
     const [data, setData] = useState();
 

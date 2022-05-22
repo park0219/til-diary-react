@@ -17,7 +17,11 @@ const DiaryEditor = ({ isEdit, originData }) => {
     const [emotion, setEmotion] = useState(3);
     const [content, setContent] = useState("");
 
-    const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
+    //const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
+
+    const onCreate = () => {};
+    const onEdit = () => {};
+    const onRemove = () => {};
 
     const handleClickEmote = useCallback((emotion) => {
         setEmotion(emotion);

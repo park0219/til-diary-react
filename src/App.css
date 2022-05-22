@@ -106,12 +106,35 @@ header button {
     justify-content: space-between;
 }
 
+.DiaryList .menu_wrapper .left_col {
+    flex-grow: 1;
+    display: flex;
+}
+
+.DiaryList .menu_wrapper .left_col input {
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ececec;
+
+    flex-grow: 2;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    font-family: "Nanum Pen Script";
+    font-size: 18px;
+}
+
 .DiaryList .menu_wrapper .right_col {
     flex-grow: 1;
 }
 
 .DiaryList .menu_wrapper .right_col button {
-    width: 100%;
+    width: 48%;
+    margin-left: 2%;
 }
 
 .DiaryList .ControlMenu {
@@ -119,6 +142,8 @@ header button {
     border: none;
     border-radius: 5px;
     background-color: #ececec;
+
+    flex-grow: 1;
 
     padding-top: 10px;
     padding-bottom: 10px;

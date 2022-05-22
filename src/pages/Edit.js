@@ -8,7 +8,8 @@ const Edit = () => {
 
     const [originData, SetOriginData] = useState();
     const { id } = useParams();
-    const diaryList = useContext(DiaryStateContext);
+    //const diaryList = useContext(DiaryStateContext);
+    const diaryList = [];
 
     useEffect(() => {
         const titleElement = document.getElementsByTagName("title")[0];

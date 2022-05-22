@@ -2,20 +2,18 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import MyButton from "./MyButton";
 
-const DiaryItem = ({ id, emotion, content, date }) => {
+const DiaryItem = ({ boardId, title, emotion, nickname, createdAt }) => {
     const navigate = useNavigate();
 
     const env = process.env;
     env.PUBLIC_URL = env.PUBLIC_URL || "";
 
-    const strDate = new Date(parseInt(date)).toLocaleDateString();
-
     const goDetail = () => {
-        navigate(`/diary/${id}`);
+        navigate(`/diary/${boardId}`);
     };
 
     const goEdit = () => {
-        navigate(`/edit/${id}`);
+        navigate(`/edit/${boardId}`);
     };
 
     return (
@@ -24,8 +22,9 @@ const DiaryItem = ({ id, emotion, content, date }) => {
                 <img src={process.env.PUBLIC_URL + `assets/emotion${emotion}.png`} alt={`emotion${emotion}`} />
             </div>
             <div onClick={goDetail} className="info_wrapper">
-                <div className="diary_date">{strDate}</div>
-                <div className="diary_content_preview">{content.slice(0, 25)}</div>
+                <div className="diary_date">{title}</div>
+                <div className="diary_content_preview">{nickname}</div>
+                <div className="diary_content_preview">{createdAt.replace("T", " ")}</div>
             </div>
             <div className="btn_wrapper">
                 <MyButton text={"수정하기"} onClick={goEdit} />
