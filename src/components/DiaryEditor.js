@@ -24,7 +24,6 @@ const DiaryEditor = ({ isEdit, originData }) => {
             const res = await axios.post("http://localhost:8080/api/board", { title: title, content: content, emotion: emotion }, { headers: { Authorization: `Bearer ${token}` } });
             if (res.status === 200) {
                 alert("등록되었습니다.");
-                navigate("/list", { replace: true });
                 return;
             }
             throw new Error();
@@ -37,7 +36,6 @@ const DiaryEditor = ({ isEdit, originData }) => {
             const res = await axios.put(`http://localhost:8080/api/board/${boardId}`, { title: title, content: content, emotion: emotion }, { headers: { Authorization: `Bearer ${token}` } });
             if (res.status === 200) {
                 alert("수정되었습니다.");
-                navigate("/list", { replace: true });
                 return;
             }
             throw new Error();
@@ -45,7 +43,18 @@ const DiaryEditor = ({ isEdit, originData }) => {
             alert("저장하는 과정에서 오류가 발생했습니다.");
         }
     };
-    const onRemove = () => {};
+    const onRemove = async (boardId) => {
+        try {
+            const res = await axios.delete(`http://localhost:8080/api/board/${boardId}`, { headers: { Authorization: `Bearer ${token}` } });
+            if (res.status === 200) {
+                alert("삭제되었습니다.");
+                return;
+            }
+            throw new Error();
+        } catch (error) {
+            alert("저장하는 과정에서 오류가 발생했습니다.");
+        }
+    };
 
     const handleClickEmote = useCallback((emotion) => {
         setEmotion(emotion);
@@ -63,13 +72,14 @@ const DiaryEditor = ({ isEdit, originData }) => {
             } else {
                 onEdit(originData.boardId, title, content, emotion);
             }
+            navigate("/list", { replace: true });
         }
     };
 
     const handleRemove = () => {
         if (window.confirm("정말 삭제하시겠습니까?")) {
-            onRemove(originData.id);
-            navigate("/", { replace: true });
+            onRemove(originData.boardId);
+            navigate("/list", { replace: true });
         }
     };
 
