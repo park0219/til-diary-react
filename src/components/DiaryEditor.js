@@ -60,7 +60,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
         setEmotion(emotion);
     }, []);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (content.length < 1) {
             contentRef.current.focus();
             return;
@@ -68,17 +68,17 @@ const DiaryEditor = ({ isEdit, originData }) => {
 
         if (window.confirm(isEdit ? "일기를 수정하시겠습니까?" : "새로운 일기를 작성하시겠습니까?")) {
             if (!isEdit) {
-                onCreate(title, content, emotion);
+                await onCreate(title, content, emotion);
             } else {
-                onEdit(originData.boardId, title, content, emotion);
+                await onEdit(originData.boardId, title, content, emotion);
             }
             navigate("/list", { replace: true });
         }
     };
 
-    const handleRemove = () => {
+    const handleRemove = async () => {
         if (window.confirm("정말 삭제하시겠습니까?")) {
-            onRemove(originData.boardId);
+            await onRemove(originData.boardId);
             navigate("/list", { replace: true });
         }
     };
