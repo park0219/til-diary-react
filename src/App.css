@@ -418,7 +418,6 @@ header button {
 }
 
 /* Join */
-
 .Join section {
     margin-top: 10px;
     display: flex;
@@ -443,6 +442,10 @@ header button {
 .Join .control_box {
     display: flex;
     justify-content: space-between;
+}
+
+.Join .control_box button {
+    margin: 10px;
 }
 
 /* Menu */
