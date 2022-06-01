@@ -9,6 +9,8 @@ import Login from "./pages/Login";
 import Join from "./pages/Join";
 import { getCookie, removeCookie, setCookie } from "./util/cookie";
 import MyMenu from "./components/MyMenu";
+import Home from "./pages/Home";
+import TilStatus from "./pages/TilStatus";
 
 const tokenReducer = (state, action) => {
     switch (action.type) {
@@ -60,8 +62,8 @@ function App() {
                     <div className="App">
                         <MyMenu />
                         <Routes>
-                            <Route path="/" element={<List />} />
-                            <Route path="/til-status" element={<List />} />
+                            <Route path="/" element={<Home />} />
+                            <Route path="/til-status" element={<TilStatus />} />
                             <Route path="/list" element={<List />} />
                             <Route path="/new" element={<New />} />
                             <Route path="/edit/:boardId" element={<Edit />} />
