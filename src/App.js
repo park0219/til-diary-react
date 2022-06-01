@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import "./App.css";
 import List from "./pages/List";
 import New from "./pages/New";
@@ -32,12 +32,15 @@ export const TokenStateContext = React.createContext();
 export const TokenDispatchContext = React.createContext();
 
 function App() {
+    const [getToken, setGetToken] = useState(false);
+
     useEffect(() => {
         //로그인 정보 초기화
         const login_token = getCookie("login_token");
         if (login_token) {
             tokenDispatch({ type: "CREATE", login_token: login_token });
         }
+        setGetToken(true);
     }, []);
 
     const [token, tokenDispatch] = useReducer(tokenReducer, "");
@@ -56,26 +59,32 @@ function App() {
     };
 
     return (
-        <TokenStateContext.Provider value={token}>
-            <TokenDispatchContext.Provider value={{ onTokenCreate, onTokenRemove }}>
-                <BrowserRouter>
-                    <div className="App">
-                        <MyMenu />
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/til-status" element={<TilStatus />} />
-                            <Route path="/list" element={<List />} />
-                            <Route path="/new" element={<New />} />
-                            <Route path="/edit/:boardId" element={<Edit />} />
-                            <Route path="/diary/:boardId" element={<Diary />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/join" element={<Join />} />
-                            <Route path="/info" element={<Join />} />
-                        </Routes>
-                    </div>
-                </BrowserRouter>
-            </TokenDispatchContext.Provider>
-        </TokenStateContext.Provider>
+        <>
+            {getToken ? (
+                <TokenStateContext.Provider value={token}>
+                    <TokenDispatchContext.Provider value={{ onTokenCreate, onTokenRemove }}>
+                        <BrowserRouter>
+                            <div className="App">
+                                <MyMenu />
+                                <Routes>
+                                    <Route path="/" element={<Home />} />
+                                    <Route path="/til-status" element={<TilStatus />} />
+                                    <Route path="/list" element={<List />} />
+                                    <Route path="/new" element={<New />} />
+                                    <Route path="/edit/:boardId" element={<Edit />} />
+                                    <Route path="/diary/:boardId" element={<Diary />} />
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/join" element={<Join />} />
+                                    <Route path="/info" element={<Join />} />
+                                </Routes>
+                            </div>
+                        </BrowserRouter>
+                    </TokenDispatchContext.Provider>
+                </TokenStateContext.Provider>
+            ) : (
+                "로딩 중 입니다."
+            )}
+        </>
     );
 }
 

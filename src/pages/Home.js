@@ -1,12 +1,12 @@
 import HeatMap from "@uiw/react-heat-map";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { useEffect, useState } from "react";
-import { getCookie } from "../util/cookie";
+import { useContext, useEffect, useState } from "react";
+import { TokenStateContext } from "../App";
 
 const Home = () => {
     const [data, setData] = useState({});
-    const login_token = getCookie("login_token");
+    const login_token = useContext(TokenStateContext);
 
     useEffect(() => {
         const titleElement = document.getElementsByTagName("title")[0];
