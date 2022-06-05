@@ -1,6 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { TokenStateContext } from "../App";
 import DiaryEditor from "../components/DiaryEditor";
 
 const Edit = () => {
@@ -8,6 +10,8 @@ const Edit = () => {
 
     const [originData, SetOriginData] = useState();
     const { boardId } = useParams();
+
+    const token = useContext(TokenStateContext);
 
     useEffect(() => {
         const titleElement = document.getElementsByTagName("title")[0];
@@ -25,6 +29,16 @@ const Edit = () => {
                 } else {
                     alert("없는 일기 입니다.");
                     navigate("/", { replace: true });
+                }
+                if (token) {
+                    const jwtInfo = jwtDecode(token);
+                    if (res.data.username !== jwtInfo.sub) {
+                        alert("수정 권한이 없는 게시글 입니다.");
+                        navigate(-1, { replace: true });
+                    }
+                } else {
+                    alert("수정 권한이 없는 게시글 입니다.");
+                    navigate(-1, { replace: true });
                 }
             } catch (error) {
                 alert("일기 정보를 불러오는 과정에서 오류가 발생했습니다.");

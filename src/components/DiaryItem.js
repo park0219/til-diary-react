@@ -26,9 +26,6 @@ const DiaryItem = ({ boardId, title, emotion, nickname, createdAt }) => {
                 <div className="diary_content_preview">{nickname}</div>
                 <div className="diary_content_preview">{createdAt.replace("T", " ")}</div>
             </div>
-            <div className="btn_wrapper">
-                <MyButton text={"수정하기"} onClick={goEdit} />
-            </div>
         </div>
     );
 };

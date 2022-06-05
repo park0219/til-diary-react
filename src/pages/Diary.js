@@ -1,6 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { TokenStateContext } from "../App";
 import MyButton from "../components/MyButton";
 import MyHeader from "../components/MyHeader";
 import { emotionList } from "../util/emotion";
@@ -9,6 +11,9 @@ const Diary = () => {
     const navigate = useNavigate();
     const { boardId } = useParams();
     const [data, setData] = useState();
+    const [editAble, setEditAble] = useState(false);
+
+    const token = useContext(TokenStateContext);
 
     useEffect(() => {
         const titleElement = document.getElementsByTagName("title")[0];
@@ -21,6 +26,12 @@ const Diary = () => {
             try {
                 const res = await axios.get(`http://localhost:8080/api/board/${boardId}`);
                 setData(res.data);
+                if (token !== undefined && token !== "") {
+                    const jwtInfo = jwtDecode(token);
+                    if (res.data.username === jwtInfo.sub) {
+                        setEditAble(true);
+                    }
+                }
             } catch (error) {
                 alert("일기 정보를 불러오는 과정에서 오류가 발생했습니다.");
             }
@@ -38,7 +49,7 @@ const Diary = () => {
                 <MyHeader
                     headText={`${data.createdAt.split("T")[0]} - ${data.nickname} 기록`}
                     leftChild={<MyButton text={"< 뒤로가기"} onClick={() => navigate(-1)} />}
-                    rightChild={<MyButton text={"수정하기"} onClick={() => navigate(`/edit/${data.boardId}`)} />}
+                    rightChild={editAble ? <MyButton text={"수정하기"} onClick={() => navigate(`/edit/${data.boardId}`)} /> : ""}
                 />
                 <article>
                     <section>
