@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TokenStateContext } from "../App";
+import { TokenDispatchContext, TokenStateContext } from "../App";
 import MyButton from "../components/MyButton";
 import MyHeader from "../components/MyHeader";
 
@@ -18,6 +18,8 @@ const Info = () => {
         email_receives: false,
     });
     const token = useContext(TokenStateContext);
+
+    const { onTokenRemove } = useContext(TokenDispatchContext);
 
     useEffect(() => {
         //사용자 정보 불러오기
@@ -88,6 +90,14 @@ const Info = () => {
         }
     };
 
+    const logout = () => {
+        if (!window.confirm("로그아웃 하시겠습니까?")) {
+            return;
+        }
+        onTokenRemove();
+        navigate("/", { replace: true });
+    };
+
     return (
         <div>
             <MyHeader headText={`내정보관리 - ${inputValue.username}`} />
@@ -107,6 +117,7 @@ const Info = () => {
                         <div className="control_box">
                             <MyButton text={"취소하기"} onClick={() => navigate(`/`)} />
                             <MyButton text={"작성완료"} type={isActive ? "positive" : "default"} onClick={infoSubmit} />
+                            <MyButton text={"로그아웃"} type="negative" onClick={logout} />
                         </div>
                     </section>
                 </form>
