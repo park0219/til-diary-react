@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MyButton from "../components/MyButton";
 import MyHeader from "../components/MyHeader";
@@ -14,10 +14,10 @@ const Join = () => {
         passwordCheck: "",
         nickname: "",
         email: "",
-        emailCheck: false,
+        email_receives: false,
     });
 
-    const { username, password, passwordCheck, nickname, email, email_receives } = inputValue;
+    const { username, password, passwordCheck, nickname, email } = inputValue;
 
     const handleInput = (event) => {
         const { name, value, type } = event.target;

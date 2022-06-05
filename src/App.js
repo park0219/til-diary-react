@@ -11,6 +11,7 @@ import { getCookie, removeCookie, setCookie } from "./util/cookie";
 import MyMenu from "./components/MyMenu";
 import Home from "./pages/Home";
 import TilStatus from "./pages/TilStatus";
+import Info from "./pages/Info";
 
 const tokenReducer = (state, action) => {
     switch (action.type) {
@@ -75,7 +76,7 @@ function App() {
                                     <Route path="/diary/:boardId" element={<Diary />} />
                                     <Route path="/login" element={<Login />} />
                                     <Route path="/join" element={<Join />} />
-                                    <Route path="/info" element={<Join />} />
+                                    <Route path="/info" element={<Info />} />
                                 </Routes>
                             </div>
                         </BrowserRouter>
