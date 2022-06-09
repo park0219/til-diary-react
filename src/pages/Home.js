@@ -10,6 +10,7 @@ import MyButton from "../components/MyButton";
 const Home = () => {
     const navigate = useNavigate();
     const [data, setData] = useState({});
+    const [todayTIL, setTodayTIL] = useState(false);
     const login_token = useContext(TokenStateContext);
 
     useEffect(() => {
@@ -26,6 +27,15 @@ const Home = () => {
         try {
             const res = await axios.get(`http://localhost:8080/api/status/${username}`);
             setData(res.data);
+            if (res.data !== undefined) {
+                let today = new Date();
+                res.data.statusList.forEach((item, index) => {
+                    if (item.date === `${today.getFullYear()}/${(today.getMonth() > 9 ? "" : "0") + (today.getMonth() + 1)}/${(today.getDate() > 9 ? "" : "0") + today.getDate()}`) {
+                        setTodayTIL(true);
+                        return false;
+                    }
+                });
+            }
         } catch (error) {
             alert("목록을 불러오는 과정에서 오류가 발생했습니다.");
         }
@@ -46,6 +56,7 @@ const Home = () => {
                             legendCellSize={0}
                         />
                     </div>
+                    <div className="today_til">{todayTIL === true ? <span>오늘의 TIL를 작성했습니다.</span> : <span>오늘의 TIL을 작성해주세요.</span>}</div>
                 </div>
             ) : (
                 <div class="login_box">

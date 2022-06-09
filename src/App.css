@@ -482,6 +482,12 @@ header > ul li.on {
     font-size: 15px;
 }
 
+.tilStatus div.today_til {
+    font-size: 20px;
+    margin-top: 5px;
+    text-align: center;
+}
+
 /* Home */
 .login_box {
     margin-top: 10px;
