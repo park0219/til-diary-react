@@ -62,7 +62,7 @@ const Diary = () => {
                     <section>
                         <h4>TIL 내용</h4>
                         <div className="diary_content_wrapper">
-                            <p>{data.content}</p>
+                            <div dangerouslySetInnerHTML={{ __html: data.contentHtml }} />
                         </div>
                     </section>
                 </article>
