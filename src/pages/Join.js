@@ -65,7 +65,7 @@ const Join = () => {
         <div>
             <MyHeader headText="회원가입" />
             <div className="Join">
-                <form onSubmit={joinSubmit}>
+                <form>
                     <section>
                         <input type="text" name="username" size="43" maxLength={50} placeholder="아이디(3글자 이상)" onChange={handleInput} />
                         <input type="password" name="password" size="43" maxLength={50} placeholder="비밀번호(3글자 이상)" onChange={handleInput} />
@@ -79,7 +79,7 @@ const Join = () => {
                     </section>
                     <section>
                         <div className="control_box">
-                            <MyButton text={"취소하기"} onClick={() => navigate(`/join`)} />
+                            <MyButton text={"취소하기"} onClick={() => navigate(`/`)} />
                             <MyButton text={"작성완료"} type={isActive ? "positive" : "default"} onClick={joinSubmit} />
                         </div>
                     </section>
