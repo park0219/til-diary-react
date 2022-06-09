@@ -53,6 +53,10 @@ const Diary = () => {
                 />
                 <article>
                     <section>
+                        <h4>제목</h4>
+                        <div>{data.title}</div>
+                    </section>
+                    <section>
                         <h4>TIL 소감</h4>
                         <div className={["diary_img_wrapper", `diary_img_wrapper_${data.emotion}`].join(" ")}>
                             <img src={curEmotionData.emotion_img} alt={curEmotionData.emotion_description} />
