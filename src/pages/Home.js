@@ -2,10 +2,13 @@ import HeatMap from "@uiw/react-heat-map";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import YouTube from "react-youtube";
 import { TokenStateContext } from "../App";
+import MyButton from "../components/MyButton";
 
 const Home = () => {
+    const navigate = useNavigate();
     const [data, setData] = useState({});
     const login_token = useContext(TokenStateContext);
 
@@ -45,7 +48,9 @@ const Home = () => {
                     </div>
                 </div>
             ) : (
-                ""
+                <div class="login_box">
+                    <MyButton text={"로그인하기"} onClick={() => navigate(`/login`)} />
+                </div>
             )}
             <div>
                 <h2>markdown 문법 정보 입니다.</h2>

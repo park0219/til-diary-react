@@ -481,3 +481,16 @@ header > ul li.on {
 .tilStatus div svg text {
     font-size: 15px;
 }
+
+/* Home */
+.login_box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.login_box button {
+    width: 60%;
+    height: 40px;
+    font-size: 20px;
+    margin: auto;
+    display: block;
+}
