@@ -2,6 +2,7 @@ import HeatMap from "@uiw/react-heat-map";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
+import YouTube from "react-youtube";
 import { TokenStateContext } from "../App";
 
 const Home = () => {
@@ -46,7 +47,31 @@ const Home = () => {
             ) : (
                 ""
             )}
-            <div>markdown 문법 정보 입니다.</div>
+            <div>
+                <h2>markdown 문법 정보 입니다.</h2>
+                <YouTube
+                    videoId="dUbp9wAy178"
+                    opts={{
+                        width: "100%",
+                        height: "390",
+                    }}
+                    //이벤트 리스너
+                    onEnd={(e) => {
+                        e.target.stopVideo(0);
+                    }}
+                />
+                <YouTube
+                    videoId="kMEb_BzyUqk"
+                    opts={{
+                        width: "100%",
+                        height: "390",
+                    }}
+                    //이벤트 리스너
+                    onEnd={(e) => {
+                        e.target.stopVideo(0);
+                    }}
+                />
+            </div>
         </div>
     );
 };
