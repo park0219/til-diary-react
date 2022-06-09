@@ -59,9 +59,9 @@ const Info = () => {
         }
     };
 
-    let inputValid = nickname.length > 3 && email.length > 1;
+    let inputValid = nickname.length >= 3 && email.length > 1;
     if (password.length > 0) {
-        inputValid = inputValid && password.length > 3 && password === passwordCheck;
+        inputValid = inputValid && password.length >= 3 && password === passwordCheck;
     }
     const emailValid = regEmail.test(email);
     const isActive = inputValid && emailValid === true;

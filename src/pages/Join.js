@@ -35,7 +35,7 @@ const Join = () => {
         }
     };
 
-    const inputValid = username.length > 3 && password.length > 3 && password === passwordCheck && nickname.length > 3 && email.length > 1;
+    const inputValid = username.length >= 3 && password.length >= 3 && password === passwordCheck && nickname.length >= 3 && email.length > 1;
     const emailValid = regEmail.test(email);
     const isActive = inputValid && emailValid === true;
 
